@@ -1,26 +1,302 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  Contractor Manpower: a clean operations console.
+  White ground, neutral cool greys, one primary (premium blue). Semantic colours (destructive, success,
+  warning) appear only as small status signals, never as decoration. Light theme only.
+*/
 
 @theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  /* Shift tones: three steps of the one blue, so the palette stays single-hued. */
+  --color-shift-day: var(--shift-day);
+  --color-shift-day-foreground: var(--shift-day-foreground);
+  --color-shift-night: var(--shift-night);
+  --color-shift-night-foreground: var(--shift-night-foreground);
+  --color-shift-general: var(--shift-general);
+  --color-shift-general-foreground: var(--shift-general-foreground);
+
+  /* Attendance status colours: semantic only, shared by the register, the board and their legends. */
+  --color-status-present: var(--status-present);
+  --color-status-late: var(--status-late);
+  --color-status-missing: var(--status-missing);
+  --color-status-absent: var(--status-absent);
+  --color-status-onduty: var(--status-onduty);
+  --color-status-rest: var(--status-rest);
+  --color-status-holiday: var(--status-holiday);
+  /* Text shades of the same hues, at least 4.5:1 on white, for status words and numbers. */
+  --color-status-present-ink: var(--status-present-ink);
+  --color-status-late-ink: var(--status-late-ink);
+  --color-status-missing-ink: var(--status-missing-ink);
+  --color-status-absent-ink: var(--status-absent-ink);
+  --color-status-onduty-ink: var(--status-onduty-ink);
+  --color-status-rest-ink: var(--status-rest-ink);
+  --color-status-holiday-ink: var(--status-holiday-ink);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05), 0 1px 3px 0 rgb(15 23 42 / 0.04);
+  --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.04);
+  --shadow-lg: 0 16px 40px -12px rgb(15 23 42 / 0.18);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.21 0.02 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.02 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.02 265);
+
+  /* Premium blue, the only brand colour. */
+  --primary: oklch(0.52 0.2 262);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.97 0.006 265);
+  --secondary-foreground: oklch(0.28 0.03 265);
+  --muted: oklch(0.975 0.004 265);
+  --muted-foreground: oklch(0.52 0.02 265);
+  --accent: oklch(0.96 0.025 260);
+  --accent-foreground: oklch(0.42 0.17 262);
+
+  --destructive: oklch(0.57 0.21 27);
+  --success: oklch(0.56 0.13 155);
+  --warning: oklch(0.7 0.15 70);
+
+  --border: oklch(0.925 0.006 265);
+  --input: oklch(0.89 0.008 265);
+  --ring: oklch(0.52 0.2 262);
+
+  --chart-1: oklch(0.52 0.2 262);
+  --chart-2: oklch(0.7 0.13 255);
+  --chart-3: oklch(0.83 0.07 252);
+  --chart-4: oklch(0.36 0.13 265);
+  --chart-5: oklch(0.75 0.02 265);
+
+  --shift-day: oklch(0.86 0.075 256);
+  --shift-day-foreground: oklch(0.3 0.12 264);
+  --shift-night: oklch(0.42 0.16 264);
+  --shift-night-foreground: oklch(0.99 0 0);
+  --shift-general: oklch(0.99 0.008 250);
+  --shift-general-foreground: oklch(0.45 0.18 262);
+
+  --status-present: oklch(0.58 0.14 152);
+  --status-late: oklch(0.68 0.16 65);
+  --status-missing: oklch(0.62 0.18 42);
+  --status-absent: oklch(0.57 0.21 27);
+  --status-onduty: oklch(0.52 0.2 262);
+  --status-rest: oklch(0.55 0.04 265);
+  --status-holiday: oklch(0.52 0.19 300);
+  --status-present-ink: oklch(0.47 0.12 152);
+  --status-late-ink: oklch(0.5 0.12 60);
+  --status-missing-ink: oklch(0.5 0.15 42);
+  --status-absent-ink: oklch(0.5 0.19 27);
+  --status-onduty-ink: oklch(0.48 0.2 262);
+  --status-rest-ink: oklch(0.47 0.04 265);
+  --status-holiday-ink: oklch(0.47 0.19 300);
+
+  --sidebar: oklch(0.985 0.003 265);
+  --sidebar-foreground: oklch(0.36 0.02 265);
+  --sidebar-primary: oklch(0.52 0.2 262);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.955 0.025 260);
+  --sidebar-accent-foreground: oklch(0.42 0.17 262);
+  --sidebar-border: oklch(0.925 0.006 265);
+  --sidebar-ring: oklch(0.52 0.2 262);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--input) transparent;
+  }
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+    font-feature-settings: "cv11", "ss01";
+    font-variant-numeric: tabular-nums;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+  input,
+  select,
+  textarea {
+    caret-color: var(--primary);
+  }
+  a {
+    text-underline-offset: 3px;
+  }
+  dialog::backdrop {
+    background: color-mix(in oklch, var(--foreground) 35%, transparent);
+    backdrop-filter: blur(2px);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Field label, matching shadcn <Label>. */
+  .label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--foreground);
+  }
+  /* Native inputs, selects and textareas styled like shadcn <Input>. */
+  .field {
+    width: 100%;
+    min-height: 36px;
+    border: 1px solid var(--input);
+    background: var(--background);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--foreground);
+    box-shadow: var(--shadow-xs);
+    transition: border-color 150ms var(--ease-out-quart), box-shadow 150ms var(--ease-out-quart);
+  }
+  .field::placeholder {
+    color: var(--muted-foreground);
+  }
+  .field:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 22%, transparent);
+  }
+  .field:disabled {
+    background: var(--muted);
+    color: var(--muted-foreground);
+    cursor: not-allowed;
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--destructive) 18%, transparent);
+  }
+  select.field {
+    appearance: none;
+    padding-right: 34px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+  }
+  /* Data tables, matching shadcn <Table>. */
+  .grid-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+  }
+  .grid-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 40px;
+    background: var(--muted);
+    text-align: left;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted-foreground);
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .grid-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .grid-table tbody tr {
+    transition: background-color 120ms var(--ease-out-quart);
+  }
+  .grid-table tbody tr:hover {
+    background: color-mix(in oklch, var(--muted) 70%, transparent);
+  }
+  .grid-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Cards settle into place on first paint. Content is never hidden by it. */
+@keyframes slot-in {
+  from {
+    transform: translateY(4px);
+  }
+  to {
+    transform: none;
+  }
+}
+.slot-in {
+  animation: slot-in 240ms var(--ease-out-quart) both;
 }

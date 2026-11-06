@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
+/test-results/
+/playwright-report/
+/.playwright-mcp/
+
+# local tool state (browser logs, design-tool caches and old screenshots)
+/.gstack/
+/.impeccable/hook.cache.json
+/.impeccable/questions/
+/.impeccable/review/
+/.impeccable/direction-payload.json
