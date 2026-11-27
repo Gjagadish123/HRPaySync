@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning src/lib/domain.test.ts",
     "test:e2e": "playwright test",
     "build:pages": "next build && node scripts/flatten-export-segments.mjs out"
