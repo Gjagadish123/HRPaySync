@@ -23,6 +23,12 @@ Open http://localhost:3000.
 | `npm test` | Domain checks: overnight shifts, extension maths, dedupe, reports, Excel output, scoping (Node's built-in runner) |
 | `npm run test:e2e` | End-to-end flow tests in a real browser (Playwright, using the installed Microsoft Edge; `PW_CHANNEL=chrome` for Chrome). Builds and serves the app on port 3100, or reuses one already running there. The clock is fixed at 12:00 IST on 5 Nov 2026, so results are the same on any day. |
 
+## Live demo
+
+https://gjagadish123.github.io/HRPaySync/ (GitHub Pages). Every push to `main` runs `.github/workflows/deploy-pages.yml`: type-check, lint and the domain tests, then a static export (`npm run build:pages` with `PAGES_BASE_PATH=/HRPaySync`) published to Pages. Data lives in the visitor's browser, so each visitor gets their own copy of the demo.
+
+To build the Pages version locally: `PAGES_BASE_PATH=/HRPaySync npm run build:pages` writes it to `out/`.
+
 ## Demo walkthrough (about 10 minutes)
 
 1. **Dashboard** (`/`). Today at a glance: present against approved strength, absences and late arrivals, extra duty, open replacements, verification, the month's daily manpower trend, strength by contractor and department, what needs attention, and recent activity.
